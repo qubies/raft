@@ -537,7 +537,7 @@ func MockMemberWithMachine(ID string) *RaftMember {
 	pwd, _ := os.Getwd()
 	R.CM = new(CM.ConnectionManager)
 	R.CM.ID = ID
-	R.Machine = stateMachine.CreateStateMachine(pwd+"/machines/"+R.ID[:6]+".sm", contentionLevel) //build or recreate the state machine.
+	R.Machine = stateMachine.CreateStateMachine(pwd+"/machines/"+R.ID[:6]+".sm", 50) //build or recreate the state machine.
 	terr.VerbPrint(R.outputTo, 1, verb, R.ID[:6], "Target Set to:", 1)
 	R.Machine.SetTarget(1) //restores a target after a reboot
 	return R
