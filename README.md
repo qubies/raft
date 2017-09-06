@@ -97,5 +97,12 @@ go test ./...
 go test -race ./...
 ```
 
+| Flag | Function                                                                                               |
+|------|--------------------------------------------------------------------------------------------------------|
+|-i    |The -i flag is required and allows the raft to specify a member to contact to obtain membership. The -i expects an address in ipv4 form 255.255.255.255:12345. The -i option must point to a valid IP address to allow a new raft member to attach itself to an existing raft. If an unreachable IP is used, no members will be added. It is acceptable to use -i localhost for the first member in a cluster, as there is no one to connect to. 
+|-e    |The -e option allows a timed expiry to be set, but rather than a countdown, the program will stop at a given time. This is to allow the raft members to all shutdown at approximately the same time allowing testing to check the state at a given instant. -e expects a time/date variable to follow in the format mm/dd/yyyy-hh:mm:am.
+|-q    |The -q option (quick set) is followed by an integer indicating the next rounded expiry time (time where the raft should stop). For example -q 5 will stop at the next minute divisible by 5 ie. 10:45 or 10:50. A quick set time does not guarantee a runtime of the length indicated, rather it will stop at the next interval. 
+|-c    |The -c option is for chaos, and it will randomly suspend and resume the member. The -c option is used in testing to ensure that randomized interrupts occur throughout testing causing elections, partitions, and various inequalities for the raft to deal with. 
+
 This project is built by Tobias Renwick with the Supervision of Dr. Cameron MacDonell of MacEwan University
 This project is based on the RAFT distributed consensus algorithm as defined @ https://raft.github.io. Thank you for the wonderful resources!
