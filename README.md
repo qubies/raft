@@ -96,7 +96,8 @@ go test ./...
 #!Go
 go test -race ./...
 ```
-
+# Running RAFT #
+### Flags ###
 | Flag | Function                                                                                               |
 |------|--------------------------------------------------------------------------------------------------------|
 |-i    |The -i flag is required and allows the raft to specify a member to contact to obtain membership. The -i expects an address in ipv4 form 255.255.255.255:12345. The -i option must point to a valid IP address to allow a new raft member to attach itself to an existing raft. If an unreachable IP is used, no members will be added. It is acceptable to use -i localhost for the first member in a cluster, as there is no one to connect to. 
