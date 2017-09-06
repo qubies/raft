@@ -1,0 +1,7 @@
+*.log
+*.sm
+!TestData/*/*.sm
+*.raft
+*.bak
+*launch.json
+*.test

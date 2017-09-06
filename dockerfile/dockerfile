@@ -1,0 +1,27 @@
+#pull the latest golang
+FROM golang:latest
+# Make ssh dir
+RUN mkdir /root/.ssh/
+
+# Install NCurses locally
+RUN apt-get update && apt-get -y install libncurses5-dev libncursesw5-dev && go get github.com/rthornton128/goncurses
+
+# Copy over private key, and set permissions
+ADD dockerDev/dockerKey /root/.ssh/id_rsa
+RUN chmod 0600 /root/.ssh/id_rsa\
+# Create known_hosts
+&& touch /root/.ssh/known_hosts\
+# Add bitbuckets key
+&& ssh-keyscan bitbucket.org >> /root/.ssh/known_hosts
+
+# Clone the conf files into the docker container
+ARG PULLIT=unknown
+RUN PULLIT=${PULLIT} mkdir /go/src/bitbucket.org && mkdir /go/src/bitbucket.org/qubies/ && cd /go/src/bitbucket.org/qubies/ && git clone git@bitbucket.org:qubies/raft.git\
+&& cd /home && echo "alias float=\"cd /go/src/bitbucket.org/qubies/raft && raft\"" >> /etc/bash.bashrc\
+&& echo "alias quick=\"cd /go/src/bitbucket.org/qubies/raft && raft -s\"" >> /etc/bash.bashrc
+
+#Run Tests
+RUN cd /go/src/bitbucket.org/qubies/raft && go test ./...\
+&& go build\
+&& go install
+ENTRYPOINT cd /go/src/bitbucket.org/qubies/raft && bash
