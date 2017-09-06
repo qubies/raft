@@ -86,12 +86,12 @@ where the *IPaddress:Port* combination is the address indicated in the status of
 go test
 ```
 
-* To run all tests, from the parent directory of raft run
+* To run all tests, from the vendor directory run
 ```
 #!Go
 go test ./...
 ```
-* To run all tests with race detection, from the parent directory of raft run
+* To run all tests with race detection, from the vendor directory run
 ```
 #!Go
 go test -race ./...
@@ -105,5 +105,4 @@ go test -race ./...
 |-q    |The -q option (quick set) is followed by an integer indicating the next rounded expiry time (time where the raft should stop). For example -q 5 will stop at the next minute divisible by 5 ie. 10:45 or 10:50. A quick set time does not guarantee a runtime of the length indicated, rather it will stop at the next interval. 
 |-c    |The -c option is for chaos, and it will randomly suspend and resume the member. The -c option is used in testing to ensure that randomized interrupts occur throughout testing causing elections, partitions, and various inequalities for the raft to deal with. 
 
-This project is built by Tobias Renwick with the Supervision of Dr. Cameron MacDonell of MacEwan University
-This project is based on the RAFT distributed consensus algorithm as defined @ https://raft.github.io. Thank you for the wonderful resources!
+This project is built by Tobias Renwick with the Supervision of Dr. Cameron MacDonell of MacEwan University. It is based on the RAFT distributed consensus algorithm as defined @ https://raft.github.io. Thank you for the wonderful resources!
