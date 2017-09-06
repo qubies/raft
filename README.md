@@ -72,7 +72,7 @@ where the *IPaddress:Port* combination is the address indicated in the status of
 * Redundant and fault tolerant
 * Let the chaos monkey loose!
 * A raft is built with logs (event logs!)
-* You can use a raft to get off the island of Paxos... whee!
+* You can use a raft to get off the island of Paxos  . whee!
 
 ### Testing ###
 
@@ -104,5 +104,33 @@ go test -race ./...
 |-e    |The -e option allows a timed expiry to be set, but rather than a countdown, the program will stop at a given time. This is to allow the raft members to all shutdown at approximately the same time allowing testing to check the state at a given instant. -e expects a time/date variable to follow in the format mm/dd/yyyy-hh:mm:am.
 |-q    |The -q option (quick set) is followed by an integer indicating the next rounded expiry time (time where the raft should stop). For example -q 5 will stop at the next minute divisible by 5 ie. 10:45 or 10:50. A quick set time does not guarantee a runtime of the length indicated, rather it will stop at the next interval. 
 |-c    |The -c option is for chaos, and it will randomly suspend and resume the member. The -c option is used in testing to ensure that randomized interrupts occur throughout testing causing elections, partitions, and various inequalities for the raft to deal with. 
+
+# The Controls #
+
+![Menu](https://github.com/qubies/raft/raw/master/Images/screenShot.png "Raft Menu Screenshot")
+
+#### View Output ####
+  * Shows a live view of the raw messaging output from the application. Verbosity can be adjusted through the verb constant inside member.go and connectionManager.go. Levels from 0 (very low only critical errors) to 5 (very chatty) are acceptable. 
+#### Print Score ####
+  * Prints the machine’s current score to the screen.
+  * NOTE: Score is not updated on the fly as calculation is not in memory, it is fairly costly, and repeated score printing will delay the responses of the client.
+#### Print Status ####
+Gives a printout of the member’s status within the raft where:
+  * ID: the first 6 chars of the 256 bit hash ID.
+  * Address: the local IP of the machine
+  * Status: [Leader, Candidate, Follower]
+  * Term: an integer representing the current term
+  * Log Length: the number of entries in the current log
+  * Members: A list of all members in the raft. 
+#### Print Log ####
+Gives a printout of the latest 10 entries in the member’s log. Formatting requires a reasonable width as entries can be fairly lengthy. 
+  * Log Index indicates the number of the log entry within the raft. Log entries are serialized. 
+  * Term: The term in which the entry was recorded
+  * Entry: The entry processed.
+#### Append New Entry ####
+Appends a numeric entry to the log. This will not affect the game and can be used to test communication between raft members. The number appended increments on each member from initialization. 
+#### Suspend/Resume ####
+  * Suspend will halt the execution of the main thread, and purge incoming messages to simulate a network failure. 
+  * Resume restores the thread and allows it to continue
 
 This project is built by Tobias Renwick with the Supervision of Dr. Cameron MacDonell of MacEwan University. It is based on the RAFT distributed consensus algorithm as defined @ https://raft.github.io. Thank you for the wonderful resources!
