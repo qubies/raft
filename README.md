@@ -98,3 +98,4 @@ go test -race ./...
 ```
 
 This project is built by Tobias Renwick with the Supervision of Dr. Cameron MacDonell of MacEwan University
+This project is based on the RAFT distributed consensus algorithm as defined @ https://raft.github.io. Thank you for the wonderful resources!
